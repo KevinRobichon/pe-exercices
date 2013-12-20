@@ -1,0 +1,9 @@
+{
+    "name": "project_euler",
+    "version": "0.0.1",
+    "author": "Kevin Robichon",
+    "repository": {},
+    "dependencies": {
+        "coffee-script": "*"
+    }
+}
