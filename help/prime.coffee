@@ -14,22 +14,29 @@ module.exports.primeList = (opt) ->
         actual += 2
     return list
 
-module.exports.primeFactors = (num) ->
+module.exports.primeFactors = (num, list, more) ->
     st = 0
     ind = 0
     fs = []
+    sq = num / 2
     while num > 1
         st += 1000
         list = module.exports.primeList({list: list, max: st})
         for p in list[ind..]
+            if p > sq
+                #fs.push num
+                num = 1
+                break
+            if more? and more
+                num *= p
             while num % p is 0
                 fs.push p
                 num /= p
             ind++
     return fs
 
-module.exports.primeFactorsExp = (num) ->
-    fs = module.exports.primeFactors(num)
+module.exports.primeFactorsExp = (num, list, more) ->
+    fs = module.exports.primeFactors(num, list, more)
     arr = []
     for f in fs
         if arr.length is 0 or arr[arr.length - 1][0] isnt f
@@ -37,3 +44,10 @@ module.exports.primeFactorsExp = (num) ->
         else
             arr[arr.length - 1][1]++
     return arr
+
+module.exports.factorsCount = (num, list) ->
+    fe = module.exports.primeFactorsExp(num, list, true)
+    count = 1
+    for f in fe
+        count *= f[1]
+    return count
